@@ -6,6 +6,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -30,8 +31,6 @@ public class Bonfires
     
     public static Block litBonfire;
     public static Block unlitBonfire;
-    public static Block glassStairs;
-    public static Block glassDoor;
     
     public static CreativeTabs tabBonfires = new CreativeTabsBonfires("Bonfires");
     
@@ -39,12 +38,16 @@ public class Bonfires
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
        	
-		litBonfire = new LitBonfire().setBlockName("litBonfire");
-		unlitBonfire = new UnlitBonfire().setBlockName("unlitBonfire");
+		litBonfire = new LitBonfire().setBlockName("litBonfire").setBlockTextureName("bonfires:litBonfire");
+		unlitBonfire = new UnlitBonfire().setBlockName("unlitBonfire").setBlockTextureName("bonfires:unlitBonfire");
 		
-		//register blocks
+		//register blocks. substring trims off '.name'
 		GameRegistry.registerBlock(litBonfire, litBonfire.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(unlitBonfire, unlitBonfire.getUnlocalizedName().substring(5));
+		
+		GameRegistry.registerTileEntity(LitBonfireTileEntity.class, "LitBonfire_TileEntity");
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(LitBonfireTileEntity.class, new BonfireRenderer());	//binds tile entity to renderer
 		
 		//register generation of bonfires
 		GameRegistry.registerWorldGenerator(new BonfireGenerator(), 1);

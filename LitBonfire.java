@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
@@ -21,7 +23,7 @@ import org.lwjgl.input.Keyboard;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class LitBonfire extends Block{
+public class LitBonfire extends BlockContainer{
 	
 	protected LitBonfire(){
 		super(Material.ground);
@@ -34,11 +36,26 @@ public class LitBonfire extends Block{
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIcon;
 	
-	@SideOnly(Side.CLIENT)
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister p_149651_1_){
 		blockIcon = p_149651_1_.registerIcon(Bonfires.MODID + ":" + this.getUnlocalizedName().substring(5));
 		//substring trims '.name' from the unlocalized name
+	}
+	
+	@Override
+	public int getRenderType(){
+		return -1;
+	}
+	
+	@Override
+	public boolean isOpaqueCube(){
+		return false;
+	}
+
+	@Override
+	public boolean renderAsNormalBlock(){
+		return false;
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -159,7 +176,10 @@ public class LitBonfire extends Block{
 				print.close();
 			}	
 	}
-	
-	
+
+	public TileEntity createNewTileEntity(World var1, int var2) {
+		// TODO Auto-generated method stub
+		return new LitBonfireTileEntity();
+	}
 }
 	
