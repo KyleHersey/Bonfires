@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 import net.minecraft.block.Block;
@@ -31,6 +32,7 @@ public class LitBonfire extends BlockContainer{
 		this.setLightLevel(1F);
 		this.setHardness(-1F);
 		this.setResistance(6000000.0F);
+		this.setTickRandomly(true);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -46,6 +48,36 @@ public class LitBonfire extends BlockContainer{
 	@Override
 	public int getRenderType(){
 		return -1;
+	}
+	
+	@SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand){
+		
+		float f;
+        float f1;
+        float f2;
+		
+		for (int i = 0; i < 1; i++)
+        {
+            f = (float)x + rand.nextFloat();
+            f1 = (float)(y + 1) - rand.nextFloat() * 0.1F;
+            f2 = (float)z + rand.nextFloat();
+            world.spawnParticle("smoke", (double)f, (double)f1, (double)f2, 0.0D, 0.0D, 0.0D);
+        }
+		
+		for (int i = 0; i < 2; i++)
+        {
+            f = (float)(x + 0.25) + rand.nextFloat()/2;
+            f1 = (float)(y + 0.1) - rand.nextFloat() * 0.1F;
+            f2 = (float)(z + 0.25) + rand.nextFloat()/2;
+            world.spawnParticle("flame", (double)f, (double)f1, (double)f2, 0.0D, 0.0D, 0.0D);	//firebase
+            
+            //9.5/16 is the center of the sword
+            f = (float)(x + .4) + rand.nextFloat()/5;
+            f1 = (float)(y - (rand.nextFloat() * 0.5));
+            f2 = (float)(z + .4) + rand.nextFloat()/5;
+            world.spawnParticle("flame", (double)f, (double)f1 + rand.nextDouble(), (double)f2, 0.0D, 0.0D, 0.0D);	//sword
+        }
 	}
 	
 	@Override
@@ -88,7 +120,7 @@ public class LitBonfire extends BlockContainer{
 					int destZ = Integer.parseInt(scan.next());
 					
 					if(par1World.getBlock(destX, destY - 1, destZ) == Bonfires.litBonfire){					
-						par5EntityPlayer.setPositionAndUpdate(destX, destY, destZ);
+						par5EntityPlayer.setPositionAndUpdate(destX + 0.5, destY, destZ + 0.5);
 						coords = new ChunkCoordinates(destX, destY, destZ);
 						par5EntityPlayer.setSpawnChunk(coords, true);
 					} 

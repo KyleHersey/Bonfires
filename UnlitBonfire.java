@@ -12,7 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class UnlitBonfire extends Block{
+public class UnlitBonfire extends BlockContainer{
 	
 	protected UnlitBonfire(){
 		super(Material.ground);
@@ -21,6 +21,21 @@ public class UnlitBonfire extends Block{
 		this.setHardness(-1.0F);
 		this.setBlockUnbreakable();
 		this.setResistance(6000000.0F);
+	}
+	
+	@Override
+	public boolean isOpaqueCube(){
+		return false;
+	}
+
+	@Override
+	public boolean renderAsNormalBlock(){
+		return false;
+	}
+	
+	@Override
+	public int getRenderType(){
+		return -1;
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -59,5 +74,10 @@ public class UnlitBonfire extends Block{
 		else {
 			return false;
 		}
+	}
+
+	public TileEntity createNewTileEntity(World var1, int var2) {
+		// TODO Auto-generated method stub
+		return new LitBonfireTileEntity();
 	}
 }

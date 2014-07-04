@@ -54,9 +54,10 @@ public class Bonfires
 		
 		//add recipe for bonfire
 		GameRegistry.addRecipe(new ItemStack(unlitBonfire), new Object[]{
-			" S ",
+			"LSL",
 			" S ",
 			"BBB",
+			'L', (new ItemStack(Items.dye,1,4)),
 			'S', Items.iron_sword,
 			'B', Blocks.iron_block
 			});
