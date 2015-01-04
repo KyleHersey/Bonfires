@@ -45,7 +45,7 @@ public class BonfireGenerator implements IWorldGenerator{
 			boolean placed = new WorldGenBonfire().generate(world, random, firstBlockXCoord, firstBlockYCoord, firstBlockZCoord);
 			
 			if(placed){
-				k = attempts;
+				break;
 			}
 		}
 		

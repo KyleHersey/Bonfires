@@ -130,7 +130,6 @@ public class LitBonfire extends BlockContainer{
 		else{			
 			
 			par5EntityPlayer.openGui(Bonfires.instance, 20, par1World, par2, par3, par4);
-			
 		}
 							
 			
