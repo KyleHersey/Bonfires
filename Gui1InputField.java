@@ -1,5 +1,6 @@
 package com.nethermole.bonfires;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -11,19 +12,23 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 
 public class Gui1InputField extends GuiScreen{
-
+	
+	private BonfiresGUI parentGui;
 	private GuiTextField textfield;
 	
-	public Gui1InputField(){
+	public Gui1InputField(BonfiresGUI parent){
 		super();
+		parentGui = parent;
 	}
 	
 	@Override
 	public void drawScreen(int par1, int par2, float par3){
 		super.drawDefaultBackground();
-		textfield.drawTextBox();
-		
 		super.drawScreen(par1, par2, par3);
+		
+		textfield.drawTextBox();
+		this.drawString(fontRendererObj, "no spaces", 20, 60, Color.WHITE.getRGB());
+		
 	}
 	
 	@Override
@@ -31,7 +36,7 @@ public class Gui1InputField extends GuiScreen{
 		buttonList.add(new GuiButton(1, width / 2 + 2, height / 2 + 20, 98, 20, "Done"));
 		
 		textfield = new GuiTextField(fontRendererObj, 20, 75, 200, 20);
-		textfield.setFocused(false);
+		textfield.setFocused(true);
 	}
 	
 	@Override
@@ -63,13 +68,14 @@ public class Gui1InputField extends GuiScreen{
 			try {
 				bonList = readBonfires();
 			} catch (FileNotFoundException e) {
-				System.out.println("Something blew up");
+				System.out.println("could not find bonTextFile.txt");
 			}
 			
 			for(int i = 0; i < bonList.size(); i++){
 				if(bonList.get(i).getX() == blockX &&
 				   bonList.get(i).getY() == blockY &&
-				   bonList.get(i).getZ() == blockZ){
+				   bonList.get(i).getZ() == blockZ && 
+				   (textfield.getText().length() > 0 && textfield.getText().contains(" ") == false)){
 					
 					bonList.get(i).setName(textfield.getText());
 					
@@ -79,6 +85,8 @@ public class Gui1InputField extends GuiScreen{
 			}
 			
 			bonfiresToFile(bonList);
+			
+			mc.displayGuiScreen(parentGui);
 		}
 	}
 	

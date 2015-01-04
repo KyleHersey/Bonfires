@@ -1,9 +1,5 @@
 package com.nethermole.bonfires;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -13,6 +9,7 @@ import java.util.Scanner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.ChunkCoordinates;
 
 public class GuiSlotList extends GuiSlot{
 	
@@ -81,22 +78,23 @@ public class GuiSlotList extends GuiSlot{
 		return this.getSize() * 24;
 	}
 	
+	
+	
+	//@Override
+	//private void overlayBackground(int p1, int p2, int p3, int p4){}
+	
+	@Override
+	protected void drawContainerBackground(Tessellator tess){}
+	
 	@Override
 	protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator, int par6, int par7){
 		this.mc.fontRenderer.setBidiFlag(true);
 		this.gui.drawCenteredString(this.mc.fontRenderer, strings[par1], this.gui.width/2, par3 + 1, 16777215);
 		//fix strange default string thing here
 	}
-	
-	@Override
-	protected void drawBackground(){
-		this.gui.drawDefaultBackground();
-	}
 
 	@Override
 	protected void elementClicked(int var1, boolean var2, int var3, int var4) {
-		
-	
 		
 		//find the bonfire list element
 		BonfireListElement destination = null;
@@ -118,22 +116,13 @@ public class GuiSlotList extends GuiSlot{
 		print.print("true" + " " + destination.getX() + " " + destination.getY() + " " + destination.getZ());
 		print.close();
 		
-		Robot rob = null;
-		try {
-			rob = new Robot();
-		} catch (AWTException e) {
-			System.out.println("cant create robot");
-		}
-		
 		mc.thePlayer.closeScreen();
 		
-		rob.keyPress(KeyEvent.VK_SHIFT);
-		rob.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-		rob.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		rob.keyRelease(KeyEvent.VK_SHIFT);
-		
-		System.out.println("clicked");
-		
+	}
+
+	@Override
+	protected void drawBackground() {
+		this.gui.drawDefaultBackground();		
 	}
 }
 

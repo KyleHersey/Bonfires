@@ -1,9 +1,11 @@
 package com.nethermole.bonfires;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
@@ -18,10 +20,8 @@ public class GuiSelectString extends GuiScreen{
 			try {
 				this.list = new GuiSlotList(parent);	//gets bonfire information
 			} catch (FileNotFoundException e) {
-				
 				e.printStackTrace();
 			}	
-			
 	}
 		//adds buttons and other controls
 		public void initGui(){
@@ -53,6 +53,7 @@ public class GuiSelectString extends GuiScreen{
 		public void drawScreen(int par1, int par2, float par3){
 			this.list.drawScreen(par1, par2, par3);
 			super.drawScreen(par1, par2, par3);
+			this.drawCenteredString(fontRendererObj, "Select Bonfire", this.width/2, 17, Color.white.getRGB());
 		}
 	}
 	
