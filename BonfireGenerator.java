@@ -34,19 +34,13 @@ public class BonfireGenerator implements IWorldGenerator{
 	}
 
 	private void generateSurface(World world, Random random, int i, int j) {
-		
-		int attempts = 500;	//number of times to try to generate (20)
-		
-		for(int k=0; k < attempts; k++){		
-			int firstBlockXCoord = i + random.nextInt(16);
-			int firstBlockYCoord = random.nextInt(world.getActualHeight());
-			int firstBlockZCoord = j + random.nextInt(16);
+						
+		if(random.nextInt(80) == 0){
+			int XCoord = i + random.nextInt(16);
+			int ZCoord = j + random.nextInt(16);
+			int YCoord = world.getHeightValue(XCoord, ZCoord);
 			
-			boolean placed = new WorldGenBonfire().generate(world, random, firstBlockXCoord, firstBlockYCoord, firstBlockZCoord);
-			
-			if(placed){
-				break;
-			}
+			new WorldGenBonfire().generate(world, random, XCoord, YCoord, ZCoord);
 		}
 		
 	}

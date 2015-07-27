@@ -9,34 +9,28 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 public class WorldGenBonfire extends WorldGenerator{
 
 	@Override
-	public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5) {
+	public boolean generate(World par1World, Random par2Random, int x, int y, int z) {
 		
-		for (int l = 0; l < 2; ++l) //l to 2
-        {
-            int i1 = par3 + par2Random.nextInt(8);
-            int j1 = par4 + par2Random.nextInt(4);
-            int k1 = par5 + par2Random.nextInt(8);
-
-            if ((par1World.isAirBlock(i1, j1, k1) || 
-            		par1World.getBlock(i1, j1, k1) == Blocks.snow_layer ||
-            		par1World.getBlock(i1, j1,  k1) == Blocks.tallgrass ||
-            		par1World.getBlock(i1, j1, k1) == Blocks.reeds) 
-            		//block to spawn in
-            		&& 
-            		//block below
-            		((par1World.getBlock(i1, j1 - 1, k1) == Blocks.grass) ||
-            		(par1World.getBlock(i1, j1 - 1, k1) == Blocks.stone)  ||
-            		(par1World.getBlock(i1, j1 - 1, k1) == Blocks.sand)   ||
-            		(par1World.getBlock(i1, j1 - 1, k1) == Blocks.gravel) ||
-            		(par1World.getBlock(i1, j1 - 1, k1) == Blocks.dirt)
-            				))
-            {
-                par1World.setBlock(i1, j1, k1, Bonfires.unlitBonfire, 0, 2);
+           if(par1World.getTopBlock(x, z) != Blocks.water){
+        	   
+        	   /* for visualizing frequency of generation
+               for(int i = 80; i < 180; i++){
+               	par1World.setBlock(x,i,z,Blocks.brick_block,0,2);
+               }
+               */
+        	   
+        	   for(int i = x-2; i <= x+2; i++){
+        		   for(int j = z-2; j <= z+2; j++){
+        			   par1World.setBlock(i,y,j, Blocks.stonebrick);
+        		   }
+        	   }
+                par1World.setBlock(x, y+1, z, Bonfires.unlitBonfire, 0, 2);
+                
                 return true;
-            }
-        }
-
-        return true;
+           }
+           
+           return false;        
+                
 	}
 
 }
