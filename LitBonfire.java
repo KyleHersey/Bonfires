@@ -3,31 +3,31 @@ package com.nethermole.bonfires;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
-
 import org.lwjgl.input.Keyboard;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class LitBonfire extends BlockContainer{
 	
-	protected LitBonfire(){
+	private final String name = "litBonfire";
+	
+	public LitBonfire(){
 		super(Material.ground);
+		
+		GameRegistry.registerBlock(this, name);
+		
 		this.setCreativeTab(Bonfires.tabBonfires);
 		this.setLightLevel(1F);
 		this.setHardness(-1F);
@@ -35,8 +35,14 @@ public class LitBonfire extends BlockContainer{
 		this.setTickRandomly(true);
 	}
 	
-	@SideOnly(Side.CLIENT)
+	public String getName(){
+		return name;
+	}
+	
+	/*
+	@SideOnly(net.minecraftforge.fml.relauncher.Side.CLIENT)
 	protected IIcon blockIcon;
+	
 	
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -44,12 +50,14 @@ public class LitBonfire extends BlockContainer{
 		blockIcon = p_149651_1_.registerIcon(Bonfires.MODID + ":" + this.getUnlocalizedName().substring(5));
 		//substring trims '.name' from the unlocalized name
 	}
+	*/
 	
 	@Override
 	public int getRenderType(){
 		return -1;
 	}
 	
+	/*
 	@SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand){
 		
@@ -79,12 +87,14 @@ public class LitBonfire extends BlockContainer{
             world.spawnParticle("flame", (double)f, (double)f1 + rand.nextDouble(), (double)f2, 0.0D, 0.0D, 0.0D);	//sword
         }
 	}
+	*/
 	
 	@Override
 	public boolean isOpaqueCube(){
 		return false;
 	}
-
+	
+	/*
 	@Override
 	public boolean renderAsNormalBlock(){
 		return false;
@@ -95,7 +105,9 @@ public class LitBonfire extends BlockContainer{
 	public IIcon getIcon(int p_149691_1_, int p_149691_2_){
 		return blockIcon;
 	}
+	*/
 	
+	/*
 	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, 
 			EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9){
@@ -135,6 +147,7 @@ public class LitBonfire extends BlockContainer{
 			
 		return true;
 	}
+	*/
 	
 	public void addThisToBonfireList(World wo, int x, int y, int z){
 		

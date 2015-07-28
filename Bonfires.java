@@ -2,19 +2,25 @@ package com.nethermole.bonfires;
 
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = Bonfires.MODID, version = Bonfires.VERSION)
 
@@ -32,26 +38,28 @@ public class Bonfires
     public static Block litBonfire;
     public static Block unlitBonfire;
     
-    public static CreativeTabs tabBonfires = new CreativeTabsBonfires("Bonfires");
+    public static CreativeTabs tabBonfires = new CreativeTabsBonfires(CreativeTabs.getNextID(), "Bonfires");
     
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
+    	
+    	for(int i = 0 ; i < 100; i++){
+    		System.out.println("Item: " + ("Fire"));
+    	}
        	
-		litBonfire = new LitBonfire().setBlockName("litBonfire").setBlockTextureName("bonfires:litBonfire");
-		unlitBonfire = new UnlitBonfire().setBlockName("unlitBonfire").setBlockTextureName("bonfires:unlitBonfire");
+		//litBonfire = new LitBonfire().setUnlocalizedName("litBonfire");
+		//unlitBonfire = new UnlitBonfire().setUnlocalizedName("unlitBonfire");
 		
-		//register blocks. substring trims off '.name'
-		GameRegistry.registerBlock(litBonfire, litBonfire.getUnlocalizedName().substring(5));
-		GameRegistry.registerBlock(unlitBonfire, unlitBonfire.getUnlocalizedName().substring(5));
+		//register blocks... maybe not used in 1.8
 		
-		GameRegistry.registerTileEntity(LitBonfireTileEntity.class, "LitBonfire_TileEntity");
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(LitBonfireTileEntity.class, new BonfireRenderer());	//binds tile entity to renderer
+		//GameRegistry.registerTileEntity(LitBonfireTileEntity.class, "LitBonfire_TileEntity");
+		//ClientRegistry.bindTileEntitySpecialRenderer(LitBonfireTileEntity.class, new BonfireRenderer());	//binds tile entity to renderer
 		
 		//register generation of bonfires
 		GameRegistry.registerWorldGenerator(new BonfireGenerator(), 1);
 		
+		/*
 		//add recipe for bonfire
 		GameRegistry.addRecipe(new ItemStack(unlitBonfire), new Object[]{
 			"LSL",
@@ -61,6 +69,7 @@ public class Bonfires
 			'S', Items.iron_sword,
 			'B', Blocks.iron_block
 			});
+			*/
 		
 		/* how to remove a recipe
 		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
@@ -80,6 +89,17 @@ public class Bonfires
     
     @EventHandler
     public void Init(FMLInitializationEvent event){
+    	
+    	if(event.getSide() == Side.CLIENT)
+    	{
+    	RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+    
+    	//blocks
+    	//renderItem.getItemModelMesher().register(Item.getItemFromBlock(litBonfire), 0, new ModelResourceLocation(Bonfires.MODID + ":" + ((LitBonfire) litBonfire).getName(), "inventory"));
+        
+    	//items
+    	}
+    	
     	NetworkRegistry.INSTANCE.registerGuiHandler(instance,proxy);
     }
 }

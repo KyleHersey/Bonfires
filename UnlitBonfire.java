@@ -1,20 +1,19 @@
 package com.nethermole.bonfires;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class UnlitBonfire extends BlockContainer{
 	
-	protected UnlitBonfire(){
+	public static String name = "unlitBonfire";
+	
+	public UnlitBonfire(){
 		super(Material.ground);
 		this.setCreativeTab(Bonfires.tabBonfires);
 		this.setLightLevel(0.75F);
@@ -28,16 +27,19 @@ public class UnlitBonfire extends BlockContainer{
 		return false;
 	}
 
+	/*
 	@Override
 	public boolean renderAsNormalBlock(){
 		return false;
 	}
+	*/
 	
 	@Override
 	public int getRenderType(){
 		return -1;
 	}
-	
+
+	/*
 	@SideOnly(Side.CLIENT)
 	protected IIcon blockIcon;
 	
@@ -75,6 +77,7 @@ public class UnlitBonfire extends BlockContainer{
 			return false;
 		}
 	}
+	*/
 
 	public TileEntity createNewTileEntity(World var1, int var2) {
 		// TODO Auto-generated method stub

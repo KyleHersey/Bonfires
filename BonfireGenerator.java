@@ -2,16 +2,16 @@ package com.nethermole.bonfires;
 
 import java.util.Random;
 
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
-import cpw.mods.fml.common.IWorldGenerator;
 
-public class BonfireGenerator implements IWorldGenerator{
+public class BonfireGenerator implements net.minecraftforge.fml.common.IWorldGenerator{
 
 	public void generate(Random random, int chunkX, int chunkZ, World world,
 			IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		
-		switch(world.provider.dimensionId){
+		switch(world.provider.getDimensionId()){
 			case -1:
 				generateNether(world, random, chunkX * 16, chunkZ * 16);
 				break;
@@ -38,9 +38,11 @@ public class BonfireGenerator implements IWorldGenerator{
 		if(random.nextInt(80) == 0){
 			int XCoord = i + random.nextInt(16);
 			int ZCoord = j + random.nextInt(16);
-			int YCoord = world.getHeightValue(XCoord, ZCoord);
 			
-			new WorldGenBonfire().generate(world, random, XCoord, YCoord, ZCoord);
+			//CHANGED FROM 1.7			
+			int YCoord = world.getTopSolidOrLiquidBlock(new BlockPos(XCoord, ZCoord, 0)).getZ();
+			
+			new WorldGenBonfire().generate(world, random, new BlockPos(XCoord, YCoord, ZCoord));
 		}
 		
 	}

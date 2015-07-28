@@ -1,22 +1,24 @@
 package com.nethermole.bonfires;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CreativeTabsBonfires extends CreativeTabs{
 
-	public CreativeTabsBonfires(String tabLabel){
-		super(tabLabel);
+	public CreativeTabsBonfires(int id, String tabLabel){
+		super(id, tabLabel);
 	}
 
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
 		// TODO Auto-generated method stub
-		return Item.getItemFromBlock(Blocks.fire);
+		return Items.fire_charge;
 	}
 	
 }

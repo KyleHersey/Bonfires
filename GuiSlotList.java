@@ -9,7 +9,6 @@ import java.util.Scanner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.ChunkCoordinates;
 
 public class GuiSlotList extends GuiSlot{
 	
@@ -86,12 +85,14 @@ public class GuiSlotList extends GuiSlot{
 	@Override
 	protected void drawContainerBackground(Tessellator tess){}
 	
+	/*
 	@Override
 	protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator, int par6, int par7){
 		this.mc.fontRenderer.setBidiFlag(true);
 		this.gui.drawCenteredString(this.mc.fontRenderer, strings[par1], this.gui.width/2, par3 + 1, 16777215);
 		//fix strange default string thing here
 	}
+	*/
 
 	@Override
 	protected void elementClicked(int var1, boolean var2, int var3, int var4) {
@@ -123,6 +124,13 @@ public class GuiSlotList extends GuiSlot{
 	@Override
 	protected void drawBackground() {
 		this.gui.drawDefaultBackground();		
+	}
+
+	@Override
+	protected void drawSlot(int entryID, int p_180791_2_, int p_180791_3_, int p_180791_4_, int p_180791_5_,
+			int p_180791_6_) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

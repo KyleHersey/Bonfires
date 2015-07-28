@@ -7,7 +7,9 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
@@ -21,15 +23,19 @@ private final ModelLitBonfire model;
 	}
 	
 	private void adjustRotatePivotViaMeta(World world, int x, int y, int z){
-		int meta = world.getBlockMetadata(x,y,z);
+		
+		//CHANGE FROM 1.7... seems bad
+		int meta = world.getBlockState(new BlockPos(x, y, z)).getBlock().getMetaFromState(world.getBlockState(new BlockPos(x, y, z)));
 		GL11.glPushMatrix();
 		GL11.glRotatef(meta * (-90), 0.0F, 0.0F, 1.0F);
 		GL11.glPopMatrix();
 	}
 	
+	
+	//CHANGE FROM 1.7 what is something???
 	@Override
 	public void renderTileEntityAt(TileEntity var1, double x, double y,
-			double z, float scale) {
+			double z, float scale, int something) {
 		
 		GL11.glPushMatrix();														//Tells renderer to do something
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F,(float) z + 0.5F);		//Set initial location
@@ -47,12 +53,12 @@ private final ModelLitBonfire model;
 	
 	//set lighting stuff
 	private void adjustLightFixture(World world, int x, int y, int z, Block block){
-		Tessellator tess = Tessellator.instance;
-		float brightness = block.getLightValue(world, x, y, z);
-		int skyLight = world.getLightBrightnessForSkyBlocks(x, y, z, 0);
+		Tessellator tess = Tessellator.getInstance();
+		float brightness = block.getLightValue(world, new BlockPos(x, y, z));
+		int skyLight = world.getLightFor(EnumSkyBlock.BLOCK, new BlockPos(x, y, z));
 		int modulousModifier = skyLight / 65536;
 		int divModifier = skyLight / 65535;
-		tess.setColorOpaque_F(brightness,  brightness,  brightness);
+		//tess.setColorOpaque_F(brightness,  brightness,  brightness);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) modulousModifier, divModifier);
 	}
 }

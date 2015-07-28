@@ -3,6 +3,7 @@ package com.nethermole.bonfires;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -35,7 +36,8 @@ public class Gui1InputField extends GuiScreen{
 	public void initGui(){		
 		buttonList.add(new GuiButton(1, width / 2 + 2, height / 2 + 20, 98, 20, "Done"));
 		
-		textfield = new GuiTextField(fontRendererObj, 20, 75, 200, 20);
+		//CHANGE FROM 1.7 I dont know what the first parameter to this is
+		textfield = new GuiTextField(0, fontRendererObj, 20, 75, 200, 20);
 		textfield.setFocused(true);
 	}
 	
@@ -46,13 +48,22 @@ public class Gui1InputField extends GuiScreen{
 	
 	@Override
 	public void mouseClicked(int par1, int par2, int par3){
-		super.mouseClicked(par1, par2, par3);
+		try {
+			super.mouseClicked(par1, par2, par3);
+		} catch (IOException e) {
+			System.out.println("mouseClicked in Gui1InputField caused IOException");
+		}
 		textfield.mouseClicked(par1, par2, par3);
 	}
 	
 	@Override
 	public void keyTyped(char c, int i){
-		super.keyTyped(c, i);
+		try {
+			super.keyTyped(c, i);
+		} catch (IOException e) {
+			System.out.println("keyTyped in Gui1InputField caused IOException");
+
+		}
 		textfield.textboxKeyTyped(c, i);
 	}
 	
@@ -61,9 +72,9 @@ public class Gui1InputField extends GuiScreen{
 		ArrayList<BonfireListElement> bonList = null;
 		
 		if(gb.id == 1){
-			int blockX = mc.thePlayer.rayTrace(5, 1.0F).blockX;
-			int blockY = mc.thePlayer.rayTrace(5, 1.0F).blockY;
-			int blockZ = mc.thePlayer.rayTrace(5, 1.0F).blockZ;
+			int blockX = mc.thePlayer.rayTrace(5, 1.0F).getBlockPos().getX();
+			int blockY = mc.thePlayer.rayTrace(5, 1.0F).getBlockPos().getY();
+			int blockZ = mc.thePlayer.rayTrace(5, 1.0F).getBlockPos().getZ();
 			
 			try {
 				bonList = readBonfires();
